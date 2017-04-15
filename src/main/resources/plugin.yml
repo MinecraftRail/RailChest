@@ -1,0 +1,6 @@
+name: RailChest
+version: ${project.version}
+depend: [Rail]
+description: IronChests, but implemented in Rail.
+website: http://phanta.xyz
+main: io.github.phantamanta44.mcrail.railchest.RCMain
