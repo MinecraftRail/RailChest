@@ -19,8 +19,8 @@ public class EntityExtendedChest extends SignEntity {
     private ItemStack[] inv;
     private String name;
 
-    public EntityExtendedChest(Block block, int size, String name) {
-        super(block);
+    public EntityExtendedChest(Block block, int size, String name, String id) {
+        super(block, id);
         this.inv = new ItemStack[size];
         this.name = name;
     }
