@@ -13,7 +13,7 @@ public class RCMain extends JavaPlugin {
     public void onEnable() {
         Rail.signRegistry().register(
                 "railchest:dirt",
-                ChatColor.WHITE + "Dirt Chest",
+                ChatColor.RESET + "Dirt Chest",
                 b -> new EntityExtendedChest(b, 1, "Dirt Chest", "railchest:dirt"));
         Rail.recipes().register(new RailRecipe()
                 .line("ddd").line("dcd").line("ddd")
@@ -22,7 +22,7 @@ public class RCMain extends JavaPlugin {
                 .withResult("railchest:dirt"));
         Rail.signRegistry().register(
                 "railchest:iron",
-                ChatColor.WHITE + "Iron Chest",
+                ChatColor.RESET + "Iron Chest",
                 b -> new EntityExtendedChest(b, 54, "Iron Chest", "railchest:iron"));
         Rail.recipes().register(new RailRecipe()
                 .line("ddd").line("dcd").line("ddd")
