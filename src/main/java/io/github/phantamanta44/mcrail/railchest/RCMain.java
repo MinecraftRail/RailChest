@@ -2,51 +2,75 @@ package io.github.phantamanta44.mcrail.railchest;
 
 import io.github.phantamanta44.mcrail.Rail;
 import io.github.phantamanta44.mcrail.crafting.RailRecipe;
-import io.github.phantamanta44.mcrail.railchest.tile.EntityExtendedChest;
-import org.bukkit.ChatColor;
+import io.github.phantamanta44.mcrail.module.IRailModule;
+import io.github.phantamanta44.mcrail.railchest.item.ItemExtendedChest;
+import io.github.phantamanta44.mcrail.railchest.tile.TileExtendedChest;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class RCMain extends JavaPlugin {
+public class RCMain extends JavaPlugin implements IRailModule {
 
     @Override
-    public void onEnable() {
-        Rail.signRegistry().register(
-                "railchest:dirt",
-                ChatColor.RESET + "Dirt Chest",
-                b -> new EntityExtendedChest(b, 1, "Dirt Chest", "railchest:dirt"));
+    public void phaseRegistration() {
+        for (ChestTier tier : ChestTier.values())
+            Rail.tileRegistry().register(new ItemExtendedChest(tier), b -> new TileExtendedChest(b, tier));
+    }
+
+    @Override
+    public void phasePostRegistration() {
         Rail.recipes().register(new RailRecipe()
                 .line("ddd").line("dcd").line("ddd")
                 .ingredient('d', Material.DIRT)
                 .ingredient('c', Material.CHEST)
                 .withResult("railchest:dirt"));
-        Rail.signRegistry().register(
-                "railchest:iron",
-                ChatColor.RESET + "Iron Chest",
-                b -> new EntityExtendedChest(b, 54, "Iron Chest", "railchest:iron"));
         Rail.recipes().register(new RailRecipe()
                 .line("ddd").line("dcd").line("ddd")
-                .ingredient('d', Material.IRON_INGOT)
+                .ingOreDict('d', "ingotCopper")
+                .ingredient('c', Material.CHEST)
+                .withResult("railchest:copper"));
+        Rail.recipes().register(new RailRecipe()
+                .line("ddd").line("dcd").line("ddd")
+                .ingOreDict('d', "ingotIron")
                 .ingredient('c', Material.CHEST)
                 .withResult("railchest:iron"));
-        Rail.signRegistry().register(
-                "railchest:gold",
-                ChatColor.AQUA + "Gold Chest",
-                b -> new EntityExtendedChest(b, 81, "Gold Chest", "railchest:gold"));
+        Rail.recipes().register(new RailRecipe()
+                .line("dgd").line("gcg").line("dgd")
+                .ingOreDict('d', "ingotIron")
+                .ingOreDict('g', "glass")
+                .ingredient('c', "railchest:copper")
+                .withResult("railchest:iron"));
         Rail.recipes().register(new RailRecipe()
                 .line("ddd").line("dcd").line("ddd")
-                .ingredient('d', Material.GOLD_INGOT)
+                .ingOreDict('d', "ingotSilver")
+                .ingredient('c', "railchest:copper")
+                .withResult("railchest:silver"));
+        Rail.recipes().register(new RailRecipe()
+                .line("ddd").line("dcd").line("ddd")
+                .ingOreDict('d', "ingotSilver")
+                .ingredient('c', "railchest:iron")
+                .withResult("railchest:silver"));
+        Rail.recipes().register(new RailRecipe()
+                .line("ddd").line("dcd").line("ddd")
+                .ingOreDict('d', "ingotGold")
                 .ingredient('c', "railchest:iron")
                 .withResult("railchest:gold"));
-        Rail.signRegistry().register(
-                "railchest:diamond",
-                ChatColor.LIGHT_PURPLE + "Diamond Chest",
-                b -> new EntityExtendedChest(b, 108, "Diamond Chest", "railchest:diamond"));
+        Rail.recipes().register(new RailRecipe()
+                .line("dgd").line("gcg").line("dgd")
+                .ingOreDict('d', "ingotGold")
+                .ingOreDict('g', "glass")
+                .ingredient('c', "railchest:silver")
+                .withResult("railchest:gold"));
         Rail.recipes().register(new RailRecipe()
                 .line("ggg").line("dcd").line("ggg")
-                .ingredient('g', Material.GLASS)
-                .ingredient('d', Material.DIAMOND)
+                .ingOreDict('g', "glass")
+                .ingOreDict('d', "gemDiamond")
                 .ingredient('c', "railchest:gold")
+                .withResult("railchest:diamond"));
+        Rail.recipes().register(new RailRecipe()
+                .line("ggg").line("gcg").line("ddd")
+                .ingOreDict('g', "glass")
+                .ingOreDict('d', "gemDiamond")
+                .ingredient('c', "railchest:silver")
                 .withResult("railchest:diamond"));
     }
 

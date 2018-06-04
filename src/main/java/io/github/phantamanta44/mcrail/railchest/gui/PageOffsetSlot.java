@@ -3,6 +3,7 @@ package io.github.phantamanta44.mcrail.railchest.gui;
 import io.github.phantamanta44.mcrail.gui.slot.GuiSlot;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +31,13 @@ public class PageOffsetSlot extends GuiSlot {
 
     @Override
     public boolean onInteract(Player player, InventoryClickEvent event) {
-        gui.setPage(Math.max(Math.min(gui.getPage() + offset, gui.getPageCount() - 1), 0));
+        int newPage = Math.max(Math.min(gui.getPage() + offset, gui.getPageCount() - 1), 0);
+        if (newPage == gui.getPage()) {
+            player.playSound(gui.getTile().location(), Sound.NOTE_STICKS, 1F, 1F);
+        } else {
+            player.playSound(gui.getTile().location(), Sound.BAT_TAKEOFF, 1F, 1.25F);
+            gui.setPage(newPage);
+        }
         return false;
     }
 
