@@ -36,12 +36,14 @@ public class TileExtendedChest extends RailTile implements IItemProvider, IItemA
     }
 
     @Override
-    public void onInteract(PlayerInteractEvent event) {
+    public boolean onInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && !event.getPlayer().isSneaking()) {
             event.setCancelled(true);
             block().getWorld().playSound(location(), Sound.CHEST_OPEN, 1F, 1F);
             new GuiExtendedChest(this, event.getPlayer());
+            return false;
         }
+        return true;
     }
 
     @Override
